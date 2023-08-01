@@ -5,7 +5,7 @@ import "../Styles/AdminPage.css";
 import { url } from "../Url";
 import AdminProductCard from "./AdminProductCard";
 import { WarningTwoIcon } from "@chakra-ui/icons";
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Box, Heading, SkeletonText, useToast } from "@chakra-ui/react";
 
 export const AdminPage = () => {
