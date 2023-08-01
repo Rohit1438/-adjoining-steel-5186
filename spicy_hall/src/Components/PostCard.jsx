@@ -103,7 +103,7 @@ const PostCard = (Data) => {
         </div>
         <div className="CardDetails">
           <h1>{name}</h1>
-          <p>{description.substring(0, 100)} .... </p>
+          <p>{description?.substring(0, 100)} .... </p>
           <div className="LikeSection">
             <Link style={{ alignItems: "center" }} id="Link" to={`/recipes/${_id}`}>
               Read More...

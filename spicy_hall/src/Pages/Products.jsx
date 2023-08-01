@@ -9,8 +9,6 @@ import { getProducts } from "../Redux/products/action";
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 const Products = () => {
   const posts = useSelector((store) => store.productReducer.products.recipes);
-  // console.log(posts)
-  // const [posts, SetPosts] = useState([]);
   const [pages, setPages] = useState(1);
   const Url = "http://localhost:3000/data";
   const [searchParams] = useSearchParams();
@@ -18,26 +16,11 @@ const Products = () => {
   let obj = {
     params: {
       material: searchParams.getAll("material"),
-      // type: searchParams.getAll("type"),
       _sort: "currentprice",
       _order: searchParams.get("order"),
     },
   };
   const dispatch = useDispatch();
-
-
-
-
-  // const getPosts = async () => {
-  //   try {
-  //     axios.get(`${Url}`).then((res) => {
-  //       SetPosts((pre) => [...res.data, ...res.data, ...res.data]);
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // console.log(posts);
 
   useEffect(() => {
     dispatch(getProducts(obj, pages));

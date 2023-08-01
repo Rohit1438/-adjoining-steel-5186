@@ -9,9 +9,12 @@ import line1 from "../Images/Home/line1.png";
 import { getSingleProducts, postComment } from "../Redux/products/action";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@chakra-ui/react";
-import { COMMENT_ADD } from "../Redux/products/actionTypes";
+// import { COMMENT_ADD } from "../Redux/products/actionTypes";
 import { color,colorScheme, useToast } from '@chakra-ui/react'
+
 const SingleProductsPage = () => {
+  const [commentData, setComment] = useState({});
+  const [change, setChange] = useState(false);
   const Url = "https://spicy-hall.onrender.com/recipes";
   const storedData =  localStorage.getItem("spicy_hall");
   let existingData = storedData ? JSON.parse(storedData) : [];
@@ -44,25 +47,34 @@ const check = (id) => {
   });
 };
 
-useEffect(() => {
-  check(id);
-  console.log("useEffect")
-  dispatch(getSingleProducts(id));
-}, []);
+const fetched = () => {
+  fetch(`https://spicy-hall.onrender.com/recipes/comment/${id}`,{
+  method: "PATCH",
+  headers: {
+    "Content-type": "application/json",
+    Authorization : `Bearer ${localStorage.getItem("token")}`
+  },
+  body: JSON.stringify({comment: commentData})
+ })
+ .then((res)=> {
+  return res.json()
+ })
+ .then((res)=> {
+   console.log(res.data)
+  return res.data
+ }).catch((err)=> {
+  console.log(err)
+ })
+ }
 
 useEffect(() => {
   check(id);
   console.log("useEffect")
-  dispatch(getSingleProducts(id));
-}, [data.comment]);
-
-
+  dispatch(getSingleProducts(id))
+}, [change]);
 
 
   const toast = useToast()
-  const [commentData, setComment] = useState({});
-
-  const [change, setChange] = useState(false);
 
   const handelChange = (e) => {
     setComment({
@@ -89,54 +101,9 @@ useEffect(() => {
       .catch((error) => {
        // console.log(error);
       });
-
-    // console.log(id,"1")
-    //   dispatch(postComment({ id, commentData }))
-    //     .then((res) => {
-    //       console.log(res);
-    //     })
-    //     .catch((error) => {
-
-    //       console.error('Error posting comment:', error);
-    //     });
   };
 
- //console.log(commentData);
-
-
-
-
-
-
-
-  // const { id } = useParams();
-  // const [data, setData] = useState({});
-
-  // const ProductsUrl = `http://localhost:3000/data/${id}`;
-
-  // const fetchData = async () => {
-  //   try {
-  //     let res = await axios.get(`${ProductsUrl}`);
-  //     res = res.data;
-  //     console.log(res)
-  //     setData(res);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // console.log(data.comments,"comments");
-
-  // const ingredients=data.ingredients
-  // console.log(ingredients)
-
   const handelSave =async () => {
-    // const storedData =  localStorage.getItem("spicy_hall");
-    // let existingData = storedData ? JSON.parse(storedData) : [];
    console.log("calling save")
     const isProductDuplicate = existingData.some(
       (product) => product._id === data._id
@@ -156,13 +123,6 @@ useEffect(() => {
         duration: 2000,
         isClosable: true,
       }) 
-
-      
-      // alert("Product added to saved");
-
-
-
-    
     } else {
       existingData = existingData.filter((product) => product.id !== data.id);
       localStorage.setItem("spicy_hall", JSON.stringify(existingData));
@@ -175,19 +135,11 @@ useEffect(() => {
         duration: 2000,
         isClosable: true,
       }) 
-
-
-      // alert("Product removed ");
-  
     }
     ;
   };
 
-// console.log(saved,"saved or not")
-
-
-
-  if (data && data.comment) {
+  if (data && data?.comment) {
     return (
       <DIV className={styles.SingleProductPage}>
         {data ? (
@@ -199,10 +151,6 @@ useEffect(() => {
                 </div>
                 <div className={styles.SingleDescriptionConatiner}>
                   <h1>{data.name}</h1>
-                  {/* <p id="rating"> */}
-                  {/* {data.rating} */}
-                  {/* <i className="far fa-star"></i> */}
-
                   <div id="stars">
                     {" "}
                     <StarRating rating={data.rating} />
@@ -253,9 +201,6 @@ useEffect(() => {
                   <img src={line1} alt="" />
                 </div>
                 <p id="recipe">
-                  {/*       
-      {data.directions} 
-     */}
                   {data?.directions?.split("|").map((item, i) => (
                     <li key={i}>{item}</li>
                   ))}
@@ -279,9 +224,9 @@ useEffect(() => {
                 {/* <h2 id="commentheading" style={{ color: "#171819" }}>
                   Comment Section
                 </h2> */}
-                {data.comment ? (
+                {data?.comment ? (
                   <>
-                    {data.comment.reverse().map((el, index) => (
+                    {data?.comment.reverse().map((el, index) => (
                       <Comment key={index} {...el} />
                     ))}
                   </>
@@ -392,6 +337,7 @@ const DIV = styled.div`
     border: 1px solid #f5b55668;
     padding: 20px 50px 0;
     border-radius: 20px;
+    text-align: justify
   }
   #ingredients {
     display: grid;
@@ -445,7 +391,6 @@ const DIV = styled.div`
     .detailsofrecipe {
       font-size: 5px;
       margin-top: 10px;
-
       justify-content: center;
     }
   }
