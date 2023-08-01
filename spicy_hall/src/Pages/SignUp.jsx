@@ -43,7 +43,7 @@ const SignUp = () => {
           console.log(res);
           if (res.status === 200) {
             setTimeout(() => {
-              navigate("/");
+              navigate("/login");
             }, 2000);
           }
           toast({
