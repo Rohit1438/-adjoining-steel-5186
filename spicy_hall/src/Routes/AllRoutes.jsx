@@ -8,12 +8,12 @@ import SingleProductsPage from '../Pages/SingleProductsPage'
 import SignUp from '../Pages/SignUp'
 import Login from "../Pages/Login"
 import NotFound from '../Pages/NotFound'
-import AdminLogin from '../Admin/AdminLogin'
+// import AdminLogin from '../Admin/AdminLogin'
 import SavedPage from '../Pages/SavedPage'
 import ProfilePage from '../Pages/ProfilePage'
-import { AdminPage } from '../Admin/AdminPage'
-import { AdminDashboard } from '../Admin/AdminDashboard'
-import SideBar from '../Admin/SideBar'
+// import { AdminPage } from '../Admin/AdminPage'
+// import { AdminDashboard } from '../Admin/AdminDashboard'
+// import SideBar from '../Admin/SideBar'
 
 export const AllRoutes = () => {
   return (
@@ -32,9 +32,9 @@ export const AllRoutes = () => {
       <Route path='*' element={<NotFound/>} />
 
       {/* Admin */}
-      <Route path='/adminlogin' element={<AdminLogin/>} />
+      {/* <Route path='/adminlogin' element={<AdminLogin/>} />
       <Route path='/admin' element={<AdminPage/>} />
-      <Route path='/admindashboard' element={<SideBar/>} />
+<Route path='/admindashboard' element={<SideBar/>} /> */}
     </Routes>
 
   )

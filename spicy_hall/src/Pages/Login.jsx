@@ -83,7 +83,7 @@ const Login = () => {
             autoComplete="off"
             onChange={(e) => setPassword(e.target.value)}
             />
-            <Button className="hide"
+            <Button className="hide1"
               onClick={() => setShowPassword((showPassword) => !showPassword)}
             >
               {showPassword ? (
