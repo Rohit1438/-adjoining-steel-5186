@@ -23,10 +23,10 @@ const HomePage = () => {
       <Parallax strength={400} bgImage={main}>
         {/* Container 1 */}
         <div className="home-main-container">
-          <div className="home-div1">
-            <RxHamburgerMenu style={{ fontSize: "25px", cursor: "pointer" }} />
-            <p>My Recipes</p>
-            <button className="home-b1">Find your Recipe</button>
+          <div className="home-div1" style={{display:"flex",flexDirection:"row-reverse"}}>
+            {/* <RxHamburgerMenu style={{ fontSize: "25px", cursor: "pointer" }} /> */}
+            {/* <p>My Recipes</p> */}
+            <button className="home-b1" ><Link to={"/myrecipes"}>Find your Recipe</Link></button>
           </div>
           <div className="home-div2">
             <p>DELIGHTFUL - EXPERIENCE</p>
@@ -37,7 +37,7 @@ const HomePage = () => {
               <p>Flavors Inspired by the Seasons</p>
             </div>
             <p>Order Online & feel the joy of mouthwatering food</p>
-            <button><Link to={"/recipes"}>VIEW OUR MENU</Link></button>
+            <button ><Link to={"/recipes"}>VIEW OUR MENU</Link></button>
           </div>
           <div className="home-div4">
             <img src={sideimg} alt="" />

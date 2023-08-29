@@ -11,6 +11,7 @@ import NotFound from '../Pages/NotFound'
 // import AdminLogin from '../Admin/AdminLogin'
 import SavedPage from '../Pages/SavedPage'
 import ProfilePage from '../Pages/ProfilePage'
+import { PrivateRoute } from './PrivateRoute'
 // import { AdminPage } from '../Admin/AdminPage'
 // import { AdminDashboard } from '../Admin/AdminDashboard'
 // import SideBar from '../Admin/SideBar'
@@ -23,7 +24,14 @@ export const AllRoutes = () => {
       <Route path='/' element={<HomePage/>} />
       { /* <Route path='/contact' element={<Contact/>} />
   <Route path='/about' element={<About/>} /> */}
-      <Route path='/recipes' element={<Products/>} />
+      <Route path='/recipes' element={
+      <PrivateRoute>
+
+            <Products/>
+      </PrivateRoute>
+  
+      
+      } />
       <Route path='/myrecipes' element={<SavedPage/>} />
       <Route path='/profile' element={<ProfilePage/>} />
       <Route path='/recipes/:id' element={<SingleProductsPage/>} />

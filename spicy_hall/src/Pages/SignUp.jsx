@@ -58,7 +58,7 @@ const SignUp = () => {
         .catch((err) => {
           console.log(err);
           toast({
-            description: "Wrong Credentials",
+            description: "password should contain 1 uppercase,1 number and 1 special character( @ ) atleast",
             status: "error",
             duration: 6000,
             isClosable: true,
@@ -107,6 +107,7 @@ const SignUp = () => {
             </select>
             <br />
             <br />
+       
             <input className="pass1"
               type={showPassword ? "text" : "password"}
               value={password}
@@ -124,6 +125,7 @@ const SignUp = () => {
               )}
               </Button>
             <br />
+            
             <br />
             <input className="pass"
               type={hidePassword ? "text" : "password"}
@@ -132,6 +134,7 @@ const SignUp = () => {
               autoComplete="off"
               onChange={(e) => setConfPassword(e.target.value)}
             />
+ 
             <Button
               className="hide1"
               onClick={() => setHidePassword((hidePassword) => !hidePassword)}

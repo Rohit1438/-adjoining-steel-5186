@@ -13,7 +13,9 @@ import { CircularProgress } from "@chakra-ui/react";
 import { color,colorScheme, useToast } from '@chakra-ui/react'
 
 const SingleProductsPage = () => {
-  const [commentData, setComment] = useState({});
+  const [comment, setComment] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [allComments,SetAllComments]=useState([])
   const [change, setChange] = useState(false);
   const Url = "https://spicy-hall.onrender.com/recipes";
   const storedData =  localStorage.getItem("spicy_hall");
@@ -21,10 +23,18 @@ const SingleProductsPage = () => {
   const data = useSelector(
     (store) => store.productReducer.singlePageData.recipe
   );
+
+  const commentData = useSelector(
+    (store) => store.productReducer.commentData
+  );
+console.log(commentData,"commentadtareducer")
   //const [imageData, setImage] = React.useState(arrivalData.src1);
   const { id } = useParams();
+  const toast = useToast()
  //console.log(id, "params");
   const dispatch = useDispatch();
+
+
 
 
   // useEffect(() => {
@@ -36,16 +46,18 @@ const SingleProductsPage = () => {
 //     dispatch(getSingleProducts(id));
 //     }, [data.comment])
 // }
-const [saved, setSaved] = useState(false);
 
+//checking saved recipes from local storage
+const [saved, setSaved] = useState(false);
 const check = (id) => {
   existingData.forEach((el) => {
-   // console.log(el._id, "and", id);
     if (el._id === id) {
       setSaved(true);
     }
   });
 };
+
+
 
 const fetched = () => {
   fetch(`https://spicy-hall.onrender.com/recipes/comment/${id}`,{
@@ -54,7 +66,7 @@ const fetched = () => {
     "Content-type": "application/json",
     Authorization : `Bearer ${localStorage.getItem("token")}`
   },
-  body: JSON.stringify({comment: commentData})
+  body: JSON.stringify({comment: comment})
  })
  .then((res)=> {
   return res.json()
@@ -67,42 +79,90 @@ const fetched = () => {
  })
  }
 
+// useEffect(() => {
+//   check(id);
+//   console.log("useEffect")
+//   dispatch(getSingleProducts(id))
+
+// }, [change]);
+
+// const fetchedComments = () => {
+//   axios
+//     .get(`${Url}/comment/${id}`)
+//     .then((response) => {
+//       SetAllComments(response.data.comment.reverse());
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
+
+
+
+
 useEffect(() => {
   check(id);
   console.log("useEffect")
   dispatch(getSingleProducts(id))
-}, [change]);
+  // fetchedComments();
 
 
-  const toast = useToast()
 
-  const handelChange = (e) => {
-    setComment({
-      comment: e.target.value,
-    });
-  };
-  const handelCommentPost = () => {
+  setLoading(false);
+}, [id,change]);
+
+console.log(allComments,"am the")
+
+
+//setting comment value for posting
+  // const handelChange = (e) => {
+  //   setComment({
+  //     comment: e.target.value,
+  //   });
+  // };
+
+  // const handelChange = (e) => {
+  //   setComment(e.target.value);
+  // };
+
+
+  // useEffect(()=>{
+  //   if(data){
+  //     SetAllComments([...data.comment])
+  //   }
+  //   },[data.comment])
+//,allComments
+
+  //posting comment to backend
+  const handelCommentPost = (e) => {
+   e.preventDefault()
+    // console.log()
     const token =
-(localStorage.getItem("token"));
+(localStorage.getItem("spicy_hall_token"))||""
   console.log(token)
-
     // Add the token to the request headers
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
     axios
-      .patch(`${Url}/comment/${id}`, commentData, { headers }) 
+      .patch(`${Url}/comment/${id}`, {comment:e.target.comment.value}, { headers }) 
       .then((data) => {
+        console.log(comment,"commentdata sending")
         console.log(data, "response");
-        commentData([...commentData,change])
-        setChange((pre) => !pre);
+        // commentData([change,...comment])
+        SetAllComments((pre)=>[...data.data.recipe.comment])
+        setChange(!change)
       })
       .catch((error) => {
        // console.log(error);
       });
   };
 
+
+    
+
+  // (data && data?.comment)
   const handelSave =async () => {
    console.log("calling save")
     const isProductDuplicate = existingData.some(
@@ -138,8 +198,9 @@ useEffect(() => {
     }
     ;
   };
-
-  if (data && data?.comment) {
+  if (loading) {
+    return <div>Loading...</div>;
+  }else {
     return (
       <DIV className={styles.SingleProductPage}>
         {data ? (
@@ -209,15 +270,18 @@ useEffect(() => {
             </div>
             <div className={styles.SingleComments}>
               <div className="commentAdd">
-                <input
+<form action="" onSubmit={(e)=>handelCommentPost(e)}>
+<input
                   type="text"
+                  id="comment"
                   placeholder="Add a comment"
-                  onChange={handelChange}
+                  // onChange={handelChange}
                 />
-                <button id="add" onClick={handelCommentPost}>
+                <button id="add" >
                   {" "}
                   <i class="fa-regular fa-comment"></i>
                 </button>
+</form>
               </div>
 
               <div>
@@ -226,7 +290,12 @@ useEffect(() => {
                 </h2> */}
                 {data?.comment ? (
                   <>
-                    {data?.comment.reverse().map((el, index) => (
+                    {/* {data?.comment.reverse().map((el, index) => (
+                      <Comment key={index} {...el} />
+                    ))} */}
+
+
+{commentData?.reverse().map((el, index) => (
                       <Comment key={index} {...el} />
                     ))}
                   </>
@@ -242,8 +311,13 @@ useEffect(() => {
           </>
         )}
       </DIV>
-    );
+    )
   }
+
+
+
+
+
 };
 
 export default SingleProductsPage;
@@ -287,7 +361,7 @@ const DIV = styled.div`
   h3 {
     font-size: 1.5rem;
   }
-  .commentAdd {
+  .commentAdd>form {
     display: grid;
     grid-template-columns: 80% 20%;
     justify-content: space-between;
@@ -299,7 +373,7 @@ const DIV = styled.div`
     top: 0;
     bottom: 10;
   }
-  .commentAdd > input {
+  .commentAdd >form> input {
     width: 100%;
     padding: 10px;
     color: black;

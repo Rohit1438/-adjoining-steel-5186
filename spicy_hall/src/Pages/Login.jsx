@@ -24,7 +24,7 @@ const Login = () => {
         .then((res) => {
           console.log(res, "LOGIN");
           if (res.status === 200) {
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("spicy_hall_token", res.data.token);
             setTimeout(() => {
               navigate("/");
             }, 2000);

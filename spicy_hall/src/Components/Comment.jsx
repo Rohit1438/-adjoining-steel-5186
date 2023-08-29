@@ -10,7 +10,7 @@ const Comment = (obj) => {
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "50px",height:"50px", background: "#4e4e4e", borderRadius: "100%", margin: "auto" }}>
 
 
-  <h1 style={{ fontWeight: "800", color: "white", fontSize: "2rem", margin: "0" }}> {obj.username.substring(0, 1).toUpperCase()}
+  <h1 style={{ fontWeight: "800", color: "white", fontSize: "1.5rem", margin: "0" }}> {obj.username.substring(0, 1).toUpperCase()}
   </h1>
 
 </div>
@@ -18,7 +18,7 @@ const Comment = (obj) => {
         </div>
 <div id='comcontainer'>
 <div id='username'>
-<h3 style={{fontSize:"1.5rem",fontWeight:"800"}}>
+<h3 style={{fontSize:"1.2rem",fontWeight:"800"}}>
   {obj.username}
 </h3>
 </div>
