@@ -4,17 +4,18 @@ import styles from "../Css/SavedPage.module.css";
 import PostCard from "../Components/PostCard";
 import SavedCard from "../Components/SavedCard";
 const SavedPage = () => {
-  const storedData = localStorage.getItem("spicy_hall") || [];
+  // const storedData =  
 
-  let savedData = JSON.parse(storedData);
-  console.log(savedData, "saved");
+  let savedData = JSON.parse(localStorage.getItem("spicy_hall"))|| [];
+console.log(savedData)  
+console.log(savedData, "saved");
   return (
     <Div className={`${styles.SavedPage}`}>
       <div>
         <h1>My Recipes</h1>
       </div>
       <div className="savedCardsContainer">
-        {savedData.map((el) => {
+        {savedData?.map((el) => {
           return <SavedCard {...el} />;
         })}
       </div>
@@ -25,6 +26,8 @@ const SavedPage = () => {
 export default SavedPage;
 const Div = styled.div`
   color: #e4c590;
+  padding-top: 20px;
+  min-height: 400px;
   h1 {
     font-size: 2.5rem;
   }

@@ -51,7 +51,7 @@ const ProfilePage = () => {
   const [change, setChange] = useState(false);
 
   const getMyRecipes = (url) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("spicy_hall_token");
     axios
       .get(`${url}/recipes/my-recipes`, {
         headers: {
@@ -66,7 +66,7 @@ const ProfilePage = () => {
   };
 
   const handleDelete = (_id) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("spicy_hall_token");
     axios
       .delete(`${url}/recipes/${_id}`, {
         headers: {
@@ -101,7 +101,7 @@ const ProfilePage = () => {
 
       const newRecipe = { ...formData, images: [formData.images] };
       console.log(newRecipe);
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("spicy_hall_token");
       axios
         .post(`${url}/recipes`, newRecipe, {
           headers: {
@@ -213,10 +213,11 @@ const ProfilePage = () => {
                         value={formData.category}
                         onChange={handleChange}
                         size="sm"
+                        color="#FFFFFF"
                         backgroundColor={"green.100"}
                       >
                         <option>--Select Category--</option>
-                        <option value="veg">Veg</option>
+                        <option  value="veg">Veg</option>
                         <option value="non-veg">Non-Veg</option>
                       </Select>
                     </FormControl>

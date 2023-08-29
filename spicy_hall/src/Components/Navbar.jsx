@@ -23,13 +23,16 @@ const links = [
   { path: "/", title: "Home" },
   { path: "/recipes", title: "Recipes" },
   { path: "/about", title: "About" },
-  { path: "/contact", title: "Contact" }
+  { path: "/contact", title: "Contact" },
+  
 ];
 
 const links2 = [
+  { path: "/", title: "Home" },
+  { path: "/recipes", title: "Recipes" },
   { path: "/register", title: "Signup / Register" },
-  { path: "/adnin", title: "Admin Login" },
-  { path: "/profile", title: "Profile" },
+  // { path: "/admin", title: "" },
+  // { path: "/profile", title: "Profile" },
   { path: "/myrecipes", title: "Saved Recipes"}
 ]
 
@@ -80,10 +83,12 @@ const Navbar = () => {
         width: "100%",
         top: "0px",
         borderBottom: "1px solid #ffca6f",
-        backgroundColor: "black",
+        paddingTop :"10px",
+        paddingBottom:"10px",
+        background:"#171819"
       }}
     >
-      <Box bg={useColorModeValue("transparent")} color={"#ffca6f"} px={4}>
+      <Box bg={useColorModeValue("transparent")} background={"#171819"} color={"#ffca6f"} px={4}>
         <Flex h={20} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -92,9 +97,9 @@ const Navbar = () => {
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={10} alignItems={"center"}>
-            <Box w={"75px"} ml={10}>
-              <img src={logo1} alt="" />
+          <HStack spacing={10} padding={"20px opx 20px"}  alignItems={"center"}>
+            <Box w={"125px"}  ml={10}>
+              <img  src={logo1} alt="" />
             </Box>
             <HStack
               as={"nav"}
@@ -126,7 +131,7 @@ const Navbar = () => {
               >
                 <div>
                   <Avatar
-                    size={"sm"}
+                    size={"md"}
                     src={
                       "https://e0.pxfuel.com/wallpapers/266/672/desktop-wallpaper-tom-cruise-background-black-closeup-face-men-face.jpg"
                     }
@@ -134,18 +139,24 @@ const Navbar = () => {
                 </div>
               </MenuButton>
               <MenuList bg={"blackAlpha.800"}>
+              {/* <Link to={"/"}><MenuItem bg={"gray.700"} fontSize={"1rem"} pl={"90px"} color={"white"}>Home</MenuItem></Link> */}
+              {/* <MenuDivider />
+              <Link to={"/recipes"}><MenuItem bg={"gray.700"} fontSize={"1rem"} pl={"90px"} color={"white"}>All Recipes</MenuItem></Link> */}
+              {/* <MenuDivider /> */}
                 <Link to={"/login"}><MenuItem bg={"gray.700"} fontSize={"1rem"} pl={"90px"} color={"white"}>Login</MenuItem></Link>
                 <MenuDivider />
                 <Link to={"/profile"}><MenuItem bg={"gray.700"} fontSize={"1rem"} pl={"88px"} color={"white"}>Profile</MenuItem></Link>
                 <MenuDivider />
                 <Link to={"/myrecipes"}><MenuItem bg={"gray.700"} fontSize={"1rem"} pl={"68px"} color={"white"}>Saved Recipes</MenuItem></Link>
+                <MenuDivider />
+                <Link to={"/admin"}><MenuItem bg={"gray.700"} fontSize={"1rem"} pl={"68px"} color={"white"}>Admin Login</MenuItem></Link>
               </MenuList>
             </Menu>
           </Flex>
         </Flex>
 
         {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
+          <Box pb={4} display={{ md: "none" }} paddingTop={"20px"} marginTop={"20px"} borderTop={"1px solid #ffca6fc3"}>
             <Stack as={"nav"} spacing={4}>
               {links2.map(({path, title}) => (
                 <NavLink key={path} to={path}>{title}</NavLink>

@@ -25,6 +25,7 @@ import {
     products: [],
     isError: false,
     singlePageData: {},
+    commentData:[],
     totalpages: "",
   };
   
@@ -68,11 +69,13 @@ case COMMENT_ADD:
   };
 
       case SINGLE_PRODUCT_REQUEST:
+        console.log(action.payload)
         return {
           ...state,
           isLoading: false,
           isError: false,
           singlePageData: action.payload,
+          commentData:[...action.payload.recipe.comment]
         };
       default:
         return state;
